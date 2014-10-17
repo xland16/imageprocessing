@@ -1,0 +1,1486 @@
+<body bgcolor="#E4D1BA"> 
+<title>Graphics Assignment #1</title>
+<center><h1>CS 4810: Graphics<br>Assignment #1: Image Processing</h1>
+<h3>Tom Crossland (tcc4dr)</h3>
+<h4>Compiled with g++ / Mac OS X 10.6.8</h4>
+<h4>Zero Late Days Used</h4></center>
+
+<h2>Adding Random Noise (1)</h2>
+
+The random noise function asks for a <i>noise</i> value as input. <i>Noise</i> is assumed to be in the inclusive range of 0 to 1.  The function itself loops through all pixel locations.  For each color channel, a random number in the range of [-noise,noise] is generated and then multiplied by 255.  This random value is equivalent to the amount of noise to be added given that the three color channels range in value from 0 to 255.  The noise amount is added to the pixel values in each color channel, clamped to be in the range of [0,255] and converted to an unsigned char.  The following results were generated using the function.
+<br><br>
+<table align="center">
+<caption align="bottom"><i><b>Figure 1.1.1</b> Input image of Yoda</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Inputs/yoda.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 1.1.2</b> Noisify by a factor of 0.0</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/yoda-noisify-0.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 1.1.3</b> Noisify by a factor of 0.1</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/yoda-noisify-.1.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 1.1.4</b> Noisify by a factor of 0.5</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/yoda-noisify-.5.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<hr>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 1.2.1</b> Input image of a rainbow gradient</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Inputs/rainbow.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 1.2.2</b> Noisify by a factor of 0.0</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/rainbow-noisify-0.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 1.2.3</b> Noisify by a factor of 0.1</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/rainbow-noisify-.1.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 1.2.4</b> Noisify by a factor of 0.5</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/rainbow-noisify-.5.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<hr>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 1.3.1</b> Input image of a cartoon, Archer</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Inputs/archer.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 1.3.2</b> Noisify by a factor of 0.0</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/archer-noisify-0.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 1.3.3</b> Noisify by a factor of 0.1</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/archer-noisify-.1.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 1.3.4</b> Noisify by a factor of 0.5</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/archer-noisify-.5.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<center><a href="./tcc4dr_HTML/Outputs/rainbow-noisify.mpeg">
+<i><b>Figure 1.4.1</b></a> Video of the rainbow gradient with increasingly added noise in the range of [0,1]</i>
+</center><br>
+
+The above images clearly show the addition of random noise to the input image.  This correlation can be observed in the video (Figure 1.4.1).  When the noise parameter is 0, no noise is added.  As it increases, the amound of noise increases, decreasing the overall clarity of the image.  When a noise factor of 0 is added, noise in the range of [0,0] is added, making the output image unchanged (as evident in Figures 1.1.2, 1.2.2, and 1.3.2).  The more noise one adds, the less clear and distinguishable the image becomes.  Because the range of noise being added for a parameter of .1 is smaller than the range of noise being added for a parameter of .5, Figures 1.1.3, 1.2.3, and 1.3.3 appear closer in clarity to their respective input images than Figures 1.1.4, 1.2.4, and 1.3.4.  The addition of noise can particularly be observed in Figures 1.3.1-4.  The input image is composed of a few solid colors with little or no changes in intensity or hue.  The addition of noise disrupts this phenomenon, making once solid areas be composed of different colors.
+
+<h2>Adjusting Brightness (1)</h2>
+
+The brighten function requires a <i>brightness</i> parameter.  <i>Brightness</i> is assumed to be non-negative.  For each color channel, the current pixel value is scaled by the <i>brightness</i> factor.  This new value is clamped to be in the range of [0,255] and converted to an unsigned char.  The following results were generated using this function.
+<br><br>
+<table align="center">
+<caption align="bottom"><i><b>Figure 2.1.1</b> Input image of Yoda</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Inputs/yoda.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 2.1.2</b> Brighten by a factor of 0.5</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/yoda-brighten-.5.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 2.1.3</b> Brighten by a factor of 1</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/yoda-brighten-1.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 2.1.4</b> Brighten by a factor of 2</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/yoda-brighten-2.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<hr>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 2.2.1</b> Input image of Tobias from Arrested Development</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Inputs/tobias.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 2.2.2</b> Brighten by a factor of 0.5</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/tobias-brighten-.5.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 2.2.3</b> Brighten by a factor of 1</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/tobias-brighten-1.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 2.2.4</b> Brighten by a factor of 2</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/tobias-brighten-2.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<hr>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 2.3.1</b> Input image of an Earthrise</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Inputs/earth.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 2.3.2</b> Brighten by a factor of 0.5</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/earth-brighten-.5.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 2.3.3</b> Brighten by a factor of 1</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/earth-brighten-1.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 2.3.4</b> Brighten by a factor of 2</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/earth-brighten-2.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<center><a href="./tcc4dr_HTML/Outputs/tobias-brighten.mpeg">
+<i><b>Figure 2.4.1</b></a> Video of Tobias from Arrested Development with increasingly added brightness in the range of [0,4]</i>
+</center><br>
+
+
+The above images clearly show the brightness being adjusted for the input image, as evident in the video (Figure 2.4.1). When brightness is 0, the whole picture goes to black.  As it increases, the pixels scale towards getting lighter, until they are completely white.  When a brightness factor of 1 is used, the pixel values are scaled by the constant 1, making the output image unchanged (as evident in Figures 2.1.3, 2.2.3, and 2.3.3). A brightness factor less than 1 makes the image appear darker since one is scaling down the pixel values, making them closer to (0,0,0), or black (as evident in Figures 2.1.2, 2.2.2, and 2.3.2). A brightness factor greater than 1 makes the image appear brighter since one is scaling up the pixel values, making them closer to (255,255,255), or white (as evident in Figures 2.1.4, 2.2.4, and 2.3.4).  However, there is no underflow or overflow in scaling the pixel values.  Notice how Figure 2.2.1 has a lot of glare coming from the sunny outside through the window.  The camera captured this as being white.  When said image was brightened in Figure 2.2.4, the lighter colors near white as well as pixels originally white were all scaled to values close to or at (255,255,255).  The same goes for colors close to or being black with darkening, as evident in Figures 2.3.1 and 2.3.2.
+
+
+<h2>Create luminance image (1)</h2>
+
+The luminance function generates a grayscale representation of the input image.  For each pixel, the luminance is calculated using the formula 0.30*red + 0.59*green + 0.11*blue.  Values are clamped to the range [0,255] and converted to unsigned chars.  The following results were generated using this function.
+<br><br>
+<table align="center">
+<caption align="bottom"><i><b>Figure 3.1.1</b> Input image of Yoda</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Inputs/yoda.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 3.1.2</b> Grayscale</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/yoda-gray.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<hr>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 3.2.1</b> Input image of a rainbow gradient</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Inputs/rainbow.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 3.2.2</b> Grayscale</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/rainbow-gray.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<hr>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 3.3.1</b> Input image of a letter in a circle</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Inputs/letter.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 3.3.2</b> Grayscale</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/letter-gray.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+The above images clearly show grayscale representations of the input images. Note that the grayscale function has different weights for the three color channels. Therefore, a pure blue, a pure green, and a pure red will map to three distinct luminance intensities.  Because of the weights, blue will appear darker than red and red will appear darker than green.  This can be observed in Figures 3.2.1 and 3.2.2.  Also note that the function to convert to grayscale is a many to one mapping.  This means that there are many possible RGB values that generate the same luminance value.  In Figure 3.3.1, one can clearly distinguish a circle with the letter A in it, both being two different colors ((130,100,200) and (185,100,50), respectively).  However, these RGB values both have the same grayscale luminance of 120.  The resulting grayscale image makes it impossible to distinguish the letter from the circle, as evident by Figure 3.3.2.  These are called isoluminatic colors and continue to be a challenge in converting color images to grayscale.
+
+<h2>Adjusting Contrast (1)</h2>
+
+The function to adjust contrast has a <i>contrast</i> parameter.  Adjusting the contrast scales the difference between pixel values and the average luminance of the image.  Therefore, if <i>contrast</i> is 0, the whole image will be the mean luminance.  If <i>contrast</i> is 1, there is no difference in the output from the input. As <i>contrast</i> goes to 0, the closer the pixels become to the average luminance.  The further <i>contrast</i> goes from 0, the further the pixels to the average luminance.  The follow results were generated with the function.
+<br><br>
+<table align="center">
+<caption align="bottom"><i><b>Figure 4.1.1</b> Input image of Shrek</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Inputs/shrek.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 4.1.2</b> Contrast with parameter 0.5</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/shrek-contrast-.5.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 4.1.3</b> Contrast with parameter 1</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/shrek-contrast-1.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 4.1.4</b> Contrast with parameter 2</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/shrek-contrast-2.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<hr>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 4.2.1</b> Input image of flowers</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Inputs/flowers.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 4.2.2</b> Contrast with parameter 0.5</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/flowers-contrast-.5.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 4.2.3</b> Contrast with parameter 1</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/flowers-contrast-1.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 4.2.4</b> Contrast with parameter 2</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/flowers-contrast-2.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<hr>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 4.3.1</b> Input image of a Van Gogh self portrait</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Inputs/van_gogh.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 4.3.2</b> Contrast with parameter 0.5</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/van_gogh-contrast-.5.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 4.3.3</b> Contrast with parameter 1</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/van_gogh-contrast-1.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 4.3.4</b> Contrast with parameter 2</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/van_gogh-contrast-2.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<center><a href="./tcc4dr_HTML/Outputs/van_gogh-contrast.mpeg">
+<i><b>Figure 4.4.1</b></a> Video of the Van Gogh self portrait with increasing contrast in the range of [-2,4]</i>
+</center><br>
+
+The contrast changes in the pictures with relation to the parameter input.  As one can see in Figures 4.1.3, 4.2.3, and 4.3.3, the output image is identical to the input image when the <i>contrast</i> parameter is 1.  When the contrast is between 0 and 1, the output image looks grayer and is converging to a specific gray color.  This gray color is the same as the average luminance.  This can be observed in Figures 4.1.2, 4.2.2, and 4.3.3.  Higher contrast results in a futher color distance between pixel values and the average luminance, as evident in Figures 4.1.4, 4.2.4, and 4.3.4.  This same principles can be seen in the video, Figure 4.4.1.  At the beginning of the video, the deviation from the mean luminance is scaled in a negative fashion, making colors appear to be opposite what they should be.  The frame that is completely gray is when the contrast is at 0.  Similar patterns discussed above can be observed as the contrast level increases away from 0 towards 4.
+
+<h2>Adjusting Saturation (1)</h2>
+
+The function to adjust saturation has what we will call a <i>saturation</i> parameter.  Adjusting the saturation scales the difference between pixel values and their own luminance.  Therefore, if <i>saturation</i> is 0, the whole image will be grayscale.  If <i>saturation</i> is 1, there is no difference in the output from the input. As <i>saturation</i> goes to 0, the closer the pixels go to the grayscale representation.  The further <i>saturation</i> goes from 0, the more vivid the colors of the pixels become.  The following results were generated with the function.
+<br><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 5.1.1</b> Input image of Shrek</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Inputs/shrek.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 5.1.2</b> Saturate with parameter 0.5</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/shrek-saturate-.5.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 5.1.3</b> Saturate with parameter 1</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/shrek-saturate-1.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 5.1.4</b> Saturate with parameter 2</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/shrek-saturate-2.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<hr>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 5.2.1</b> Input image of flowers</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Inputs/flowers.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 5.2.2</b> Saturate with parameter 0.5</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/flowers-saturate-.5.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 5.2.3</b> Saturate with parameter 1</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/flowers-saturate-1.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 5.2.4</b> Saturate with parameter 2</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/flowers-saturate-2.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<hr>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 5.3.1</b> Input image of a Van Gogh self portrait</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Inputs/van_gogh.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 5.3.2</b> Saturate with parameter 0.5</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/van_gogh-saturate-.5.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 5.3.3</b> Saturate with parameter 1</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/van_gogh-saturate-1.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 5.3.4</b> Saturate with parameter 2</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/van_gogh-saturate-2.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<center><a href="./tcc4dr_HTML/Outputs/shrek-saturate.mpeg">
+<i><b>Figure 5.4.1</b></a> Video of Shrek with increasing saturatation in the range of [-2,4]</i>
+</center><br>
+
+
+The saturation changes in the pictures with relation to the parameter input.  As one can see in Figures 4.1.3, 4.2.3, and 4.3.3, the output image is identical to the input image when the <i>saturation</i> parameter is 1.  When the saturation is between 0 and 1, the output image looks grayer and converging to the grayscale representation of the image. This can be observed in Figures 4.1.2, 4.2.2, and 4.3.3.  Higher saturation results in a futher color distance between pixel values and their respective luminance.  In Figure 4.1.4, Shrek seems to be more green and the sky becomes a much deeper blue.  In Figure 4.2.4, the colors of the flowers become more vivid.  Tints and shades of one color are saturated so much that they map to one color and lose some detail, as notably seen in the front fushia flower.  In Figure 4.3.4, Van Gogh's beard appears to be more notably orange than the grayer representation in Figure 4.3.2.  This same principles can be seen in the video, Figure 4.4.1.  At the beginning of the video, the deviation from each pixel's luminance is scaled in a negative fashion, making colors appear to be opposite what they should be.  The frame that is grayscale is when the saturation is at 0.  Similar patterns discussed above can be observed as the saturation level increases away from 0 towards 4.
+
+
+<h2>Quantize (1)</h2>
+
+The function to quantize takes an image with 8 bits per channel and changes them so they only use a specified amount.  Let's call this parameter <i>n</i>.  <i>n</i> is a positive integer between 1 and 8. An <i>n</i>-bit quantized image will have 2^<i>n</i> possible values for each color channel.  In other words, an <i>n</i>-bit image will have 2^(3<i>n</i>) possible colors.  The colors chosen in the new pallette are not determined by the input image.  The color space is equally divided up according to the bit depth and colors map to the closest "color bin," or the border colors at divisions.  The following images were generated with the function.
+<br><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 6.1.1</b> Input image of a ramp gradient</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Inputs/ramp.bmp" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 6.1.2</b> Quantized with 1 bit</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/ramp-quantize-1.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 6.1.3</b> Quantized with 2 bits</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/ramp-quantize-2.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 6.1.4</b> Quantized with 4 bits</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/ramp-quantize-4.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<hr>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 6.2.1</b> Input image of a rainbow gradient</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Inputs/rainbow.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 6.2.2</b> Quantized with 1 bit</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/rainbow-quantize-1.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 6.2.3</b> Quantized with 2 bits</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/rainbow-quantize-2.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 6.2.4</b> Quantized with 4 bits</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/rainbow-quantize-4.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<hr>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 6.3.1</b> Input image of a cartoon, Archer</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Inputs/archer.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 6.3.2</b> Quantized with 1 bit</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/archer-quantize-1.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 6.3.3</b> Quantized with 2 bits</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/archer-quantize-2.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 6.3.4</b> Quantized with 4 bits</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/archer-quantize-4.jpg" border="3"></img>
+</td></tr>
+</table<br>
+
+The above images demonstrate quantization with different bit levels.  As bit depth increases, the number of colors represented increases as all.  More colors means more shades, tints, shadows, and details can be depicted in the output image. In Figures 6.1.2, 6.2.2, and 6.3.2, the output images only have 8 possible colors.  In the rainbow gradient quantization, the once seemingly smooth gradient is now divided into distinct color blocks.  Colors near the border of the color bins, like orange, either map to red or yellow. In Figures 6.1.3, 6.2.3, and 6.3.3, the output images only have 64 possible colors. More details and shades start to appear. In Figures 6.1.4, 6.2.4, and 6.3.4, the output images have 4096 possible colors. Even more details and shades appear. Also notice Figures 6.3.1-4.  The image of Archer is only composed of a handful of colors.  However, when you quantize with 1 bit, certain colors map to seemingly different colors.  For instance, there is no representation of skin color (peach) with 1 bit.  The closest color is yellow, to which the skin color maps to. Also, the borders appear more jagged because intermediary colors cannot be represented.  As bit depth increases, the larger the color pallette gets.  When it gets to a 4-bit image (Figure 6.3.4), the output image is almost indistinguishable from the input image. 
+
+<h2>Random Dither (2)</h2>
+
+The random dither method is another way of quantization using <i>n</i> bits.  <i>n</i> is a positive integer between 1 and 8. Normal quantization as explained above is perform on all pixels.  Before this, noise is added to each quantized number in the range of [-255/2^<i>n</i>,255/2^<i>n</i>].  This range allows for each color channel to only change in the process of quantization by plus or minus one bin.  The follow images were generated by the function. <br><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 7.1.1</b> Input image of a ramp gradient</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Inputs/ramp.bmp" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 7.1.2</b> Random dither with 1 bit</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/ramp-rDither-1.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 7.1.3</b> Random dither with 2 bits</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/ramp-rDither-2.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 7.1.4</b> Random dither with 4 bits</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/ramp-rDither-4.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<hr>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 7.2.1</b> Input image of a rainbow gradient</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Inputs/rainbow.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 7.2.2</b> Random dither with 1 bit</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/rainbow-rDither-1.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 7.2.3</b> Random dither with 2 bits</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/rainbow-rDither-2.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 7.2.4</b> Random dither with 4 bits</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/rainbow-rDither-4.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<hr>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 7.3.1</b> Input image from American Psycho</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Inputs/psycho.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 7.3.2</b> Random dither with 1 bit</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/psycho-rDither-1.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 7.3.3</b> Random dither with 2 bits</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/psycho-rDither-2.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 7.3.4</b> Random dither with 4 bits</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/psycho-rDither-4.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+The above images produced the random dithers of the input images.  As bit depth increases, the clarity and perceived details of the output image increases.  Random noised pixels give some illusion of shade to the output, as evident by Figure 7.1.2.  Upon seeing the pixel, one can tell that that is a ramp gradient, even with only 8 possible colors with limited shades.  This offers a much better improvement than the straight quantization practice as seen in Figure 6.1.2 where one cannot see the gradient as clearly.  Also, the smaller the bit depth, the more noticeable the noise appears.  In Figure 7.3.2, one can clearly see red, purple, yellow, and green pixels even though the original picture lacks these colors.  In Figure 7.3.3 as the bit depth increases to 2, the range of the added noise decreases, allowing for a better representation of the original image. Figure 7.3.4 has, by far, the least amount of noticeable noise in it since the noise range has decreased so much.  The output image just looks like the original input image with a small fraction of noise added to it.
+<br><br>
+
+<h2>Ordered Dither (2)</h2>
+
+The ordered dither method is another way of quantization using <i>n</i> bits.  <i>n</i> is a positive integer between 1 and 8. Normal quantization as explained above is performed on all pixels.  Pseduo-random errors are applied in quantization using a matrix storing a pattern of thresholds.  The matrix implemented was the 2x2 matrix [1 3; 4 2].  These pseudo-random errors produce space pixel intensities in such a way to create the illusion of different tints and shades of colors that the bit depth cannot represent alone.  The following images were generated by the function.
+<br><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 8.1.1</b> Input image of a ramp gradient</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Inputs/ramp.bmp" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 8.1.2</b> Ordered dither with 1 bit</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/ramp-oDither2x2-1.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 8.1.3</b> Ordered dither with 2 bits</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/ramp-oDither2x2-2.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 8.1.4</b> Ordered dither with 4 bits</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/ramp-oDither2x2-4.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<hr>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 8.2.1</b> Input image of a rainbow gradient</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Inputs/rainbow.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 8.2.2</b> Ordered dither with 1 bit</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/rainbow-oDither2x2-1.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 8.2.3</b> Ordered dither with 2 bits</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/rainbow-oDither2x2-2.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 8.2.4</b> Ordered dither with 4 bits</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/rainbow-oDither2x2-4.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<hr>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 8.3.1</b> Input image from American Psycho</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Inputs/psycho.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 8.3.2</b> Ordered dither with 1 bit</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/psycho-oDither2x2-1.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 8.3.3</b> Ordered dither with 2 bits</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/psycho-oDither2x2-2.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 8.3.4</b> Ordered dither with 4 bits</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/psycho-oDither2x2-4.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+The above images show the ordered dithering process.  As bit depth increases, the quality of the image, in terms of details and shading preserved, increases, outperforming normal quantization and random dithering.  In Figure 8.1.2, the spacing of the dither enables four different shades for each colors, using only 8 colors.  When it gets to 4 bits in Figure 8.1.4, the difference between the input image and the output is only noticeable at close range.  If a person looks at the output at a far enough distance, nearby pixels will be seen together and projected by the person as a different color. Figure 8.3.3 gives a surprisingly good estimation of the image with 2 bits, especially at a further viewing range, as well as Figure 8.3.4 with 4 bits.  Also, the seemless, fluid transitions between colors can be better represented by ordered dithering as opposed to random dithering. In Figure 8.2.2, ordered dither allows for red and yellow pixels to be placed close to one another in a pattern that make the human eye perceive them as orange, a color that cannot be represented by a bit depth of 1.  The rainbow spectrum illustrates how the ordered dithering process can be used to create the illusion of more colors than the bit depth can itself represent.
+
+<h2>Floyd-Steinberg Dither (2)</h2>
+
+The Floyd-Steinberg dither is the most sophisticated dithering process, yielding better results than random dithering and ordered dithering.  The process spreads quantization error over neighbor pixels.  This error is dispersed to pixels right and below the current pixel.  In order to perform this, I had to create a new buffer of floating point pixel values. I used this intermediary buffer to spread error.  Pixel locations outside of the image boundary were assumed to be black, or had pixel value of (0,0,0).  The constants used for the dither were the same as determined by Floyd and Steinberg: 7/16, 3/16, 5/16, and 1/16.  The image was traverse from left to right, then top to bottom.  This affects how the error is spread.  The following images were generated by the function.<br><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 9.1.1</b> Input image of a ramp gradient</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Inputs/ramp.bmp" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 9.1.2</b> Floyd-Steinberg dither with 1 bit</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/ramp-fsDither-1.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 9.1.3</b> Floyd-Steinberg dither with 2 bits</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/ramp-fsDither-2.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 9.1.4</b> Floyd-Steinberg dither with 4 bits</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/ramp-fsDither-4.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<hr>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 9.2.1</b> Input image of a rainbow gradient</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Inputs/rainbow.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 9.2.2</b> Floyd-Steinberg dither with 1 bit</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/rainbow-fsDither-1.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 9.2.3</b> Floyd-Steinberg dither with 2 bits</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/rainbow-fsDither-2.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 9.2.4</b> Floyd-Steinberg dither with 4 bits</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/rainbow-fsDither-4.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<hr>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 9.3.1</b> Input image from American Psycho</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Inputs/psycho.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 9.3.2</b> Floyd-Steinberg dither with 1 bit</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/psycho-fsDither-1.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 9.3.3</b> Floyd-Steinberg dither with 2 bits</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/psycho-fsDither-2.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 9.3.4</b> Floyd-Steinberg dither with 4 bits</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/psycho-fsDither-4.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+This error diffusion dither performs remarkably well, surpassing random dither and ordered dither.  The images with 1 bit (Figures 9.1.2, 9.2.2, 9.3.2) are much closer in appearance to their input images than the results generated using the other methods and are immediately recognizable.  With 1 bit in Figure 9.2.2, the rainbow gradient appears much smoother and fluid than the ordered dithered result in Figure 8.2.2.  The clarity of 2 bit depth images (Figures 9.1.3, 9.2.3, and 9.3.3) are remarkable and give the apparence of smoother transitions between colors.  The 4 bit images (Figures 9.1.4, 9.2.4, and 9.3.4) look almost identical to the input images without magnification of the image.  This method also preserves the illusion of true colors better than ordered dither.  In Figure 9.3.2, the perceived colors match the input image more so than the ordered dither version.  The skin tone and background colors are closer to their true value than the patterns that ordered dithering can create.
+
+<h2>Blur (2)</h2>
+
+Blurring is performed by convolving an image with a kernel matrix.  To put this is simpler terms, each pixel is looped over and a series of weights are applied to said pixel and its neighbors.  The sum of these products is the current pixel's new value.  The procedure is not in place--the new values are stored in a separate buffer so futher calculations are not affected by the order in which they are done.  This method is implemented with pixel entension--pixels outside the boundary of the image are assumed to have the value of the nearest pixel in each direction in the image.  Therefore, (-1,0) has the value of pixel (0,0).  The kernel image used in this blur was [1 2 1; 2 4 2; 1 2 1]/16.  These entires sum to one.  The principle used is to spread pixel values around proportionally so that a pixel's new value is influenced partially by a fraction of its neighbor.  This yields a less noticeable gradient, causing the output picture to look smoother than the original input. The following are images generated by this function.
+
+<br><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 10.1.1</b> Input image of Sully</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Inputs/sully.bmp" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 10.1.2</b> 3x3 blur</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/sully-blur3x3.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<hr>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 10.2.1</b> Input image of a Van Gogh self-portrait</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Inputs/van_gogh.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 10.2.2</b> 3x3 blur</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/van_gogh-blur3x3.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<hr>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 10.3.1</b> Input image of Archer</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Inputs/archer.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 10.3.2</b> 3x3 blur</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/archer-blur3x3.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+The function blurs the input images noticeably.  In Figure 10.1.2, the hairs of Sully appear less distinct than in the input image.  His fur looks fuzzier as opposed to made of individual fibers. The same principle can be seen in Figure 10.2.2.  The brushstrokes of the portrait are diminished by the blur, making the painting seem smoother and done in a different manner.  Finally, the once sharp edges of the cartoon character are blurred, giving less distinct and softer edges between once vastly different colors in Figure 10.3.2.
+
+<h2>Edge Detection (2)</h2>
+
+Edge detection is performed by convolving an image with a kernel matrix, the same basic principle for blurring. The procedure is not in place--the new values are stored in a separate buffer so futher calculations are not affected by the order in which they are done.  This method is implemented with pixel entension--pixels outside the boundary of the image are assumed to have the value of the nearest pixel in each direction in the image.  Therefore, (-1,0) has the value of pixel (0,0).  The kernel image used in this blur was [-1 -1 -1; -1 8 -1; -1 -1 -1].  These entires sum to zero.  This convolution is a crude approximation of the gradient of the image.  The gradient illustrates how much and quickly the pixel values are changing. Pixels with a larger gradient represent harder edges and will be represented by higher intensity colors.  The opposite is true for pixels with a smaller gradient.  The following images were generated by the function.
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 11.1.1</b> Input image of Sully</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Inputs/sully.bmp" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 11.1.2</b> 3x3 edge detection</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/sully-edges3x3.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<hr>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 11.2.1</b> Input image of a Van Gogh self-portrait</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Inputs/van_gogh.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 11.2.2</b> 3x3 edge detection</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/van_gogh-edges3x3.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<hr>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 11.3.1</b> Blurred input image of a Van Gogh self-portrait</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/van_gogh-blur3x3.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 11.3.2</b> 3x3 edge detection</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/van_gogh-blur3x3-edges3x3.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+The function produced edge detections for the images.  In Figure 11.1.2, edges such as the monster's individual hairs and other body features were picked up as edges due to their apparent gradient.  In Figure 11.2.2, the portait had strong edges at the brushstrokes, as well as other places perhaps influenced by image compression.  In Figure 11.3.2, the input was blurred before performing edge detection.  The resulting edges became softer, making the apparent gradient to be smaller and less noticeable.  Harder edges, like between Van Gogh's hair and skin are highlighted and noticed more than softer edges such as the brushstrokes within his face.  The edge detection of the blurred portrait contains fewer perceived edges due to the smoothing of the gradient.
+
+<h2>Nearest Neighbor Scaling (2)</h2>
+
+Image scaling changes the dimensions of the image while trying to maintain the details and attributes of the original input image.  Scaling is determined by a non-negative floating point number.  Values between (0,1) scale an image down.  Values greater than 1 scale an image up.  In order to prevent gaps and multiple pixels mapping to one pixel in the output image, a reverse mapping is divised.  The output image size is determined.  Each new pixel location is looped over and mapped to a floating point pixel location in the input image.  In the nearest neighbor method, this pixel location is rounded to the nearest whole number pixel location.  Pixel locations not in the input image are assumed to have value (0,0,0).  The following images were generated by this scaling method.
+
+<br><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 12.1.1</b> Input image of stripes</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Inputs/stripe.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 12.1.2</b> Scaled by a factor of .7 using nearest neighbor method</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/stripe-scaleN-.7.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 12.1.3</b> Scaled by a factor of 1 using nearest neighbor method</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/stripe-scaleN-1.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 12.1.4</b> Scaled by a factor of 1.3 using nearest neighbor method</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/stripe-scaleN-1.3.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<hr>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 12.2.1</b> Input image of a cat</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Inputs/cat.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 12.2.2</b> Scaled by a factor of .7 using nearest neighbor method</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/cat-scaleN-.7.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 12.2.3</b> Scaled by a factor of 1 using nearest neighbor method</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/cat-scaleN-1.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 12.2.4</b> Scaled by a factor of 1.3 using nearest neighbor method</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/cat-scaleN-1.3.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<hr>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 12.3.1</b> Input image of Ainsley Harriott</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Inputs/ainsley.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 12.3.2</b> Scaled by a factor of .7 using nearest neighbor method</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/ainsley-scaleN-.7.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 12.3.3</b> Scaled by a factor of 1 using nearest neighbor method</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/ainsley-scaleN-1.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 12.3.4</b> Scaled by a factor of 1.3 using nearest neighbor method</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/ainsley-scaleN-1.3.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+The above images had scaling performed on them.  Images scaled by a factor of 1 scale to the same size as the input image.  This leads to an exact replica of the input image, as evident by Figures 12.1.3, 12.2.3, and 12.3.3.  Scaling by a number between 0 and 1 decreases the size of the image as seen in Figures 12.1.2, 12.2.2, and 12.3.2.  Because the output image is smaller than the input image, some detail has to be lost.  The nearest neighbor method does not do much to correct this.  Previously smooth transitions, especially in the cat fur and handsd of Ainsley Harriott appear to be jagged.  Also, the stripes are mapped in such a way that some lines appear thicker than others due to rounding.  Scaling up images such as Figures 12.1.4, 12.2.4, and 12.3.4, also appear somewhat pixelated since one pixel location in the previous image is being mapped to multiple adjacent pixels in the output image.
+
+<h2>Bilinear Scaling (2)</h2>
+
+Bilinear scaling is another way of scaling up or down images.  The same principle of reverse mapping applies as explained above.  Pixels should be thought of jolts of intensity at certain point locations.  Therefore, if Pixel(50,50) has value (40,20,60), that exact location, and only that exact location can be thought of having those true intensity values.  When the output image pixel is mapped to a floating point coordinate in the image plane, a new method is used to approximate the pixel value at said point.  A mapped coordinate will fall within four neighboring integer coordinates than can be represented by a pixel in the input image.  A vertical and horizontal line are drawn within the square so they intersect at the mapped point.  The areas of the cross sections become the weights for their opposite corresponding integer point locations, or corners of the square.  A weighted average is computed to determine the approximation of the pixel.  Therefore, the four nearest neighbors of a floating point coordinate are used to approximate its value.  The closer a point is to one of its neighbors, the more influence its neighbor will have on determining its estimated color.  Pixel locations outside of the image border were assumed to have intensities of zero.
+<br><br>
+<table align="center">
+<caption align="bottom"><i><b>Figure 13.1.1</b> Input image of stripes</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Inputs/stripe.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 13.1.2</b> Scaled by a factor of .7 using bilinear neighbor method</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/stripe-scaleB-.7.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 13.1.3</b> Scaled by a factor of 1 using bilinear method</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/stripe-scaleB-1.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 13.1.4</b> Scaled by a factor of 1.3 using bilinear method</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/stripe-scaleB-1.3.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<hr>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 13.2.1</b> Input image of a cat</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Inputs/cat.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 13.2.2</b> Scaled by a factor of .7 using bilinear method</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/cat-scaleB-.7.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 13.2.3</b> Scaled by a factor of 1 using bilinear method</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/cat-scaleB-1.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 13.2.4</b> Scaled by a factor of 1.3 using bilinear method</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/cat-scaleB-1.3.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<hr>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 13.3.1</b> Input image of Ainsley Harriott</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Inputs/ainsley.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 13.3.2</b> Scaled by a factor of .7 using bilinear method</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/ainsley-scaleB-.7.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 13.3.3</b> Scaled by a factor of 1 using bilinear method</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/ainsley-scaleB-1.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 13.3.4</b> Scaled by a factor of 1.3 using bilinear method</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/ainsley-scaleB-1.3.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+Bilinear scaling performs much better than nearest neighbor scaling.  In Figures 13.1.2 and 13.1.4, the new scalings both appear to resemble the original input image more than their respective images for the nearest neighbor method.  The nearest neighbor method when scaling up or down the image of the stripes would make the stripes have seemingly different widths because of an uneven amount of pixels being sampled for each stripe in the input image due to rounding.  However, the bilinear method places weights on how close a mapped floating point location is to its sample pixel location for the input image.  Therefore there are fewer harsh decisions for pixel values and intermediary locations take on values of combinations of their neighbors.  One can observe gray values in the stripe upscaling.  While the original image did not have these gray values, it gives the illusion of similar width and proportions to the original image. The Bilinear method also better spreads out mapping pixelization as evident by an apparent smoother image of Ainsley Harriott in Figures 13.3.2 and 13.3.4 as well as the cat in Figures 13.2.2 and 13.2.4.
+
+<br><br>
+
+<h2>Gaussian Scaling (2)</h2>
+
+Gaussian scaling is another way of scaling up or down images.  The same principle of reverse mapping applies as explained above.  Pixels should be thought of jolts of intensity at certain point locations.  Therefore, if Pixel(50,50) has value (40,20,60), that exact location, and only that exact location can be thought of having those true intensity values.  When the output image pixel is mapped to a floating point coordinate in the image plane, a new method is used to approximate the pixel value at said point. A new 2D coordinate axes is overlayed on the image with the mapped floating point number as the origin.  Within a given positive radius, all integer pixel locations are sampled to compute a weighted average for the estimation of the mapped pixel's value. The weights correspond to the normalized output of the Gaussian 2D function with the new 2D coordinate axes for the integer pixel locations.  Locations outside of the image boundary were assumed to have intensities (0,0,0).  For my implementation, I found the best results were achieved with a search radius of 2 and a variance for the Gaussian of 0.25 (standard deviation of 0.5).  The follow images were generated using the function.
+<br><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 14.1.1</b> Input image of stripes</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Inputs/stripe.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 14.1.2</b> Scaled by a factor of .7 using Gaussian method</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/stripe-scaleG-.7.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 14.1.3</b> Scaled by a factor of 1 using Gaussian method</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/stripe-scaleG-1.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 14.1.4</b> Scaled by a factor of 1.3 using Gaussian method</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/stripe-scaleG-1.3.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<hr>
+
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 14.2.1</b> Input image of a cat</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Inputs/cat.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 14.2.2</b> Scaled by a factor of .7 using Gaussian method</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/cat-scaleG-.7.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 14.2.3</b> Scaled by a factor of 1 using Gaussian method</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/cat-scaleG-1.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 14.2.4</b> Scaled by a factor of 1.3 using Gaussian method</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/cat-scaleG-1.3.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<hr>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 14.3.1</b> Input image of Ainsley Harriott</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Inputs/ainsley.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 14.3.2</b> Scaled by a factor of .7 using Gaussian method</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/ainsley-scaleG-.7.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 14.3.3</b> Scaled by a factor of 1 using Gaussian method</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/ainsley-scaleG-1.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 14.3.4</b> Scaled by a factor of 1.3 using Gaussian method</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/ainsley-scaleG-1.3.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+One can argue that the Gaussian sampling performed the best out of the three sampling methods used for scaling.  Very similar results were achieved with the scalings of all figures to the bilinear sampling methods.  Little or no pixelation from sampling multiple pixels occured, and features remained relatively in tact, especially the stripes in Figures 14.1.2 and 14.1.4.  The Gaussian sampling method, since it uses the Gaussian function to create a weighted average of nearby pixels, diffuses color information to neighboring pictures more aggressively, making the image appear more blurred.  This has its pros and cons.  On one hand, because of the stronger influence of neighboring pixels, the blacks appear less black and white appear less white in the stripe images (Figures 14.1.1-4) as opposed to using the other methods (Figures 12.1.1-4 and 13.1.1-4).  However, other errors are masked better by the blur.  The fur on the cat looks smoother and less jagged in Figures 14.2.1-4 as well as the edges of the pepper grinder in Figures 14.3.1-4.  Also, the Gaussian blur may introduce colors not necessarily in the originally input image, like grayer values in the stripe upscaling.  This, however, preserves proportions by creating the illusion of similar widths of the stripes, even if one cannot equally divide them up because of the new dimensions of the output image.
+
+<h2>Rotations (6 total)</h2>
+
+A parameter input was specified for the amount in degrees to rotate the input image by. Rotations were defined by piviting the bottom left corner of the image and moving it counter-clockwise. This became somwhat of an issue since the origin of an image in this code was defined to be the top left corner.  To perform an equivalent rotation, the image was rotated in the opposite direction with the top left corner remaining as the pivet.  Because of how the image coordinates lie (as you move from top to bottom, you increase in row number), this produces an equivalent output rotation. Rotations also use backwards mapping to sample for every location in the output image.  The dimensions of the output image were estimated by forward mapping the four corners of the input image to see about how wide and high the output image rotation would be--the corners will lie on these minimum and maximum x and y coordinates of the output image.  To actually estimate mapped coordinates to sample in the input image, the three previous techniques were implemented: nearest neighbor, bilinear, and Gaussian.  Gaussian again used a radius of 2 and a varience of 0.25.  Pixel locations outside the image border were assumed to have zero intensity.  The following images were generated by the rotation functions.
+<br><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 15.1.1</b> Input image of stripes</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Inputs/stripe.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 15.1.2</b> Rotated by 30 degrees using nearest neighbor method</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/stripe-rotateN-30.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 15.1.3</b> Rotated by 30 degrees using bilinear method</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/stripe-rotateB-30.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 15.1.4</b> Rotated by 30 degrees using Gaussian method</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/stripe-rotateG-30.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<hr>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 15.2.1</b> Input image of a cat</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Inputs/cat.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 15.2.2</b> Rotated by 180 degrees using nearest neighbor method</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/cat-rotateN-180.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 15.2.3</b> Rotated by 180 degrees using bilinear method</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/cat-rotateB-180.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 15.2.4</b> Rotated by 180 degrees using Gaussian method</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/cat-rotateG-180.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<hr>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 15.3.1</b> Input image of Ainsley Harriott</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Inputs/ainsley.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 15.3.2</b> Rotated by 300 degrees using nearest neighbor method</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/ainsley-rotateN-300.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 15.3.3</b> Rotated by 300 degrees using bilinear method</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/ainsley-rotateB-300.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 15.3.4</b> Rotated by 300 degrees using Gaussian method</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/ainsley-rotateG-300.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<center><a href="./tcc4dr_HTML/Outputs/cat-rotateB.mpeg">
+<i><b>Figure 15.4.1</b></a> Video of a cat being rotated using bilinear sampling with increasing rotation angle in the range of [0,360]</i>
+</center><br>
+
+The video (Figure 15.4.1) demonstrates the full range of possible rotations, from 0 degrees to 360 degrees.  Note that I made the video using iMovie, which scales still images to the same size as the video resolution.  Therefore, although it appears in the video that rotations always have the same vertical height dimension, that is not the case.  The sole purpose of this video is to show the angles at which rotation can occur, not to comment on the quality or size of the images produced at different rotations.  For single images, the same quality comparisons can be observed in rotating the images as in scaling.  Nearest neighbor performs the weakest among the three.  One can clearly see the jagged edges of the stripes in Figure 15.1.2.  In Figure 15.3.2, the pepper grinder and hands of Ainsley Harriott seem jagged as well.  The leaves in the bowl seem blocky and rough.  The border of the rotated image and the black background is also not smooth.  This is because of multiple pixels getting mapped to from the output image to the input image.  The transitions between pixel intensities are not created and the same pixels can appear more likely than not to be right next to each other, estimating the same point value.  Bilinear and Gaussian definitely improve on this.  The edges in the bilinear output appear smoother, but not as smooth as the Gaussian method.  Comparing Figures 15.3.3 and 15.3.4 show that some small jagged edges such as in the base of the pepper grinder are smoothed out by the Gaussian sampling providing arguably a better output image.
+
+<h2>Cropping (1)</h2>
+
+Cropping is a very simple task.  The user inputs 2 point locations, (x1,y1) and (x2,y2).  It is assumed that these points are within the boundary of the image.  It's also assumed that x1 <= x2 and y1 <= y2--that is that the first point is further up and to the left than the second point.  These two points specify a rectangle to crop from the image.  The first point is the top left corner of the rectangle.  The second point is the bottom right corner of the rectangle.  The rectangle is cropped out of the original image and saved as a new image.  The following images were generated by the function.
+
+<br><br>  
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 16.1.1</b> Input image of a cat</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Inputs/cat.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 16.1.2</b> Cropped defined by the rectangle formed by points (70,80) and (200,200)</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/cat-crop-70-80-200-200.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<hr>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 16.2.1</b> Input image of Ainsley Harriott</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Inputs/ainsley.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 16.2.2</b> Cropped defined by the rectangle formed by points (175,130) and (280,240)</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/ainsley-crop-175-130-280-240.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<hr>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 16.3.1</b> Input image of an Earthrise</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Inputs/earth.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 16.3.2</b> Cropped defined by the rectangle formed by points (0,0) and (399,307)</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/earth-crop-0-0-399-307.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+The following images were cropped to a rectangle defined by two points. Notice the final crop.  The input image was 400x308. The top left corner of the image is (0,0). The bottom right corner of the image is (399,307). Therefore, the rectangle defined by these two points will have the same dimensions as the input.
+
+<h2>Fun Filter: Barrel Distortion (2)</h2>
+
+As a fun filter, I implemented a barrel distortion filter.  This method warps the image in such a way that magnification decreases the further you get from the middle of the image.  To do this, backwards mapping is used, as well as Gaussian sampling.  First, a new coordinate axes is overlayed on the image with origin at the center of the image.  Next, the point on the new coordinate system is converted to polar coordinates.  This easily provides access to the distance from one pixel to the center of the image.  A new distance is computed using the formula s = r + a*r^3 where r is the mapped distance to the center, s is the unmapped distance to the center, and a is a positive constant (0.001).  The new distance computed and the original angle are converted to cartesian coordinates to give a floating point coordinate.  A Gaussian sample with variance 0.25 and radius 2 is used to estimate the intensity at this point.  Pixels outside of the original image boundary are assumed to have zero intensity.  The following images were produced by the barrel distortion filter.
+
+<br><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 17.1.1</b> Input image of a cat</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Inputs/cat.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 17.1.2</b> Image with barrel distortion</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/cat-fun.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<hr>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 17.2.1</b> Input image of stripes</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Inputs/stripe.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 17.2.2</b> Image with barrel distortion</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/stripe-fun.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<hr>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 17.3.1</b> Input image of a checkerboard</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Inputs/checkerboard.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 17.3.2</b> Image with barrel distortion</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/checkerboard-fun.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+The above images were filtered using barrel distortion.  Notice in Figures 17.1.2, 17.2.2, and 17.3.2 how the magnification of the image decreases as one moves further from the center of the image. 
+
+<h2>Compositing and Alpha Setting (1)</h2>
+
+Compositing images involves overlaying a selection of one image onto a background image.  This method assumes that each of these images are the same size.  To determine what selection is overlayed, a corresponding matte image is inputted.  The matte image is a binary image--white represents locations to be overlayed and black represents locations not to be overlayed.  In order to provide a somewhat seemless transition between the overlayed image and the background image, the alpha channel of the overlayed image is changed.  Assume all pictures are at full alpha value.  A 5x5 neighborhood is considered at each pixel location. A new weight is placed on the alpha channel depending on how many of these pixels in the neighborhood are in the overlay matte.  The new alpha channel of the pixel is the same as the number of pixels in the overlay matte divided by the number of pixels in the neighborhood times the full alpha value.  Pixels outside of the image boundary are assumed to have zero intensity and to not be selected for overlaying.  In the composite function, only pixels in the matte are copied over onto the background image.  The pixels are combined by the principle of overlay over background with alpha channels and color values combined without premultiplication.  This makes the edges of the overlayed image softer and less noticeable than without it.<br><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 18.1.1</b> Input source image of *NSYNC</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Inputs/nsync.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 18.1.2</b> Overlay image of myself</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Inputs/me.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 18.1.3</b> Matte image corresponding to the overlay image</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Inputs/matte.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 18.1.4</b> Resulting composite image of me with 4 famous people (1)</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/Outputs/tomsync.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+The resulting composite picture (Figure 18.1.4) correctly copied over the selected regions onto the background image.  The edges appear somewhat blurred and not as hard due to the alpha changing of the overlay image.  However, this method does not adequately provide a seemless transition between the overlay image and the background.  Differences in lighting, contrast, and other image details are not fixed by this method and are clearly apparent in the composite image.
+
+<h2>Beier-Neely Morphing (6)</h2>
+The Beier-Neely morph was not implemented in this assignment.
+
+<h2>Art (1)</h2>
+
+The below image is my submission to the art contest.  First, I used the rainbow gradient picture and cropped it to 240x240. I then made a composite picture overlaying Professor Lawrence's head onto the background, using a matte I made in Gimp.  I blurred the result and applied the barrel distortion filter to it.  The intermediary images as well as input images for this piece of art can be found in the tcc4dr_HTML/Art Temporary Files directory.<br><br>
+
+<table align="center">
+<caption align="bottom"><i><b>Figure 19.1.1</b> My submission to the art contest.</i></caption>
+<tr><td>
+<img src="./tcc4dr_HTML/tcc4dr.art.1.jpg" border="3"></img>
+</td></tr>
+</table><br>
+
+<br><br><br>
+On my honor as a student, I have neither given nor received aid on this assignment<br><i>-Tom Crossland</i>
